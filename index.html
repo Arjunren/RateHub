@@ -132,6 +132,7 @@
 
     async function initializePage() {
         try {
+            // FIXED URL HERE
             const response = await fetch('https://arjunrenvon.pythonanywhere.com/api/apps');
             appData = await response.json();
             
@@ -194,6 +195,7 @@
         if (!pendingRatingPayload) return;
 
         try {
+            // FIXED URL HERE
             await fetch('https://arjunrenvon.pythonanywhere.com/api/ratings', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
@@ -216,6 +218,7 @@
 
     async function loadChartData() {
         try {
+            // FIXED URL HERE
             const response = await fetch('https://arjunrenvon.pythonanywhere.com/api/ratings');
             const ratings = await response.json();
             

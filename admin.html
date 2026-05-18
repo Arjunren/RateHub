@@ -85,7 +85,7 @@
 
 <footer class="py-6 text-center mt-auto border-t border-slate-200">
     <p class="text-sm font-medium text-slate-500">
-        Powered by <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Gfinds</span>
+        Powered by <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">GFinds</span>
     </p>
 </footer>
 
@@ -116,6 +116,7 @@
 
     async function loadAdminData() {
         try {
+            // FIXED URL HERE
             const appRes = await fetch('https://arjunrenvon.pythonanywhere.com/api/apps');
             const apps = await appRes.json();
             const appGrid = document.getElementById('adminAppGrid');
@@ -157,6 +158,7 @@
                 `;
             });
 
+            // FIXED URL HERE
             const ratRes = await fetch('https://arjunrenvon.pythonanywhere.com/api/ratings');
             const ratings = await ratRes.json();
             const tbody = document.getElementById('ratingsTableBody');
@@ -198,6 +200,7 @@
         };
 
         try {
+            // FIXED URL HERE
             await fetch(`https://arjunrenvon.pythonanywhere.com/api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             showMessage("Application slot updated successfully!");
             loadAdminData(); 
@@ -205,7 +208,9 @@
     }
 
     function promptDelete(id) { deleteTargetId = id; document.getElementById('deleteModal').showModal(); }
+    
     document.getElementById('confirmBtn').addEventListener('click', async function() {
+        // FIXED URL HERE
         await fetch(`https://arjunrenvon.pythonanywhere.com/api/ratings/${deleteTargetId}`, { method: 'DELETE' });
         document.getElementById('deleteModal').close();
         loadAdminData(); 
