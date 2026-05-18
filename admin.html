@@ -117,7 +117,7 @@
     async function loadAdminData() {
         try {
             // FIXED URL HERE
-            const appRes = await fetch('https://eliteplus.pythonanywhere.com//api/apps');
+            const appRes = await fetch('https://eliteplus.pythonanywhere.com/api/apps');
             const apps = await appRes.json();
             const appGrid = document.getElementById('adminAppGrid');
             appGrid.innerHTML = '';
@@ -159,7 +159,7 @@
             });
 
             // FIXED URL HERE
-            const ratRes = await fetch('https://eliteplus.pythonanywhere.com//api/ratings');
+            const ratRes = await fetch('https://eliteplus.pythonanywhere.com/api/ratings');
             const ratings = await ratRes.json();
             const tbody = document.getElementById('ratingsTableBody');
             const emptyMsg = document.getElementById('emptyMessage');
@@ -201,7 +201,7 @@
 
         try {
             // FIXED URL HERE
-            await fetch(`https://eliteplus.pythonanywhere.com//api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            await fetch(`https://eliteplus.pythonanywhere.com/api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             showMessage("Application slot updated successfully!");
             loadAdminData(); 
         } catch (error) { console.error(error); showMessage("Error updating application."); }
@@ -211,7 +211,7 @@
     
     document.getElementById('confirmBtn').addEventListener('click', async function() {
         // FIXED URL HERE
-        await fetch(`https://eliteplus.pythonanywhere.com//api/ratings/${deleteTargetId}`, { method: 'DELETE' });
+        await fetch(`https://eliteplus.pythonanywhere.com/api/ratings/${deleteTargetId}`, { method: 'DELETE' });
         document.getElementById('deleteModal').close();
         loadAdminData(); 
     });
