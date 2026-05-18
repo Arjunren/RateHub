@@ -116,7 +116,7 @@
 
     async function loadAdminData() {
         try {
-            const appRes = await fetch('/api/apps');
+            const appRes = await fetch('https://arjunrenvon.pythonanywhere.com/api/apps');
             const apps = await appRes.json();
             const appGrid = document.getElementById('adminAppGrid');
             appGrid.innerHTML = '';
@@ -157,7 +157,7 @@
                 `;
             });
 
-            const ratRes = await fetch('/api/ratings');
+            const ratRes = await fetch('https://arjunrenvon.pythonanywhere.com/api/ratings');
             const ratings = await ratRes.json();
             const tbody = document.getElementById('ratingsTableBody');
             const emptyMsg = document.getElementById('emptyMessage');
@@ -198,7 +198,7 @@
         };
 
         try {
-            await fetch(`/api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            await fetch(`https://arjunrenvon.pythonanywhere.com/api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             showMessage("Application slot updated successfully!");
             loadAdminData(); 
         } catch (error) { console.error(error); showMessage("Error updating application."); }
@@ -206,7 +206,7 @@
 
     function promptDelete(id) { deleteTargetId = id; document.getElementById('deleteModal').showModal(); }
     document.getElementById('confirmBtn').addEventListener('click', async function() {
-        await fetch(`/api/ratings/${deleteTargetId}`, { method: 'DELETE' });
+        await fetch(`https://arjunrenvon.pythonanywhere.com/api/ratings/${deleteTargetId}`, { method: 'DELETE' });
         document.getElementById('deleteModal').close();
         loadAdminData(); 
     });
