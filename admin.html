@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RateApp | Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        dialog::backdrop { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); }
+        dialog[open] { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+<nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <span class="text-xl font-bold tracking-tight">RateApp <span class="text-indigo-400 font-medium">Admin</span></span>
+        </div>
+        <a href="/" class="text-sm font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 hover:shadow-md border border-slate-700">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            View Live Site
+        </a>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+    
+    <section>
+        <div class="mb-6 flex items-center gap-3">
+            <h2 class="text-2xl font-bold text-slate-800 tracking-tight">Slot Management</h2>
+            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded-md">Live Sync</span>
+        </div>
+        <div id="adminAppGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"></div>
+    </section>
+
+    <section>
+        <div class="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <h2 class="text-2xl font-bold text-slate-800 tracking-tight">User Ratings Database</h2>
+            
+            <div class="relative w-full sm:w-72">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="searchInput" placeholder="Search by Name or ID..." class="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm text-sm outline-none transition-all duration-200">
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-100 border-b border-slate-200 text-slate-600 text-xs uppercase tracking-wider font-bold">
+                        <tr>
+                            <th class="p-4 whitespace-nowrap">ID#</th>
+                            <th class="p-4 whitespace-nowrap">Name</th>
+                            <th class="p-4 text-center whitespace-nowrap" id="thApp1">App 1</th>
+                            <th class="p-4 text-center whitespace-nowrap" id="thApp2">App 2</th>
+                            <th class="p-4 text-center whitespace-nowrap" id="thApp3">App 3</th>
+                            <th class="p-4 text-center whitespace-nowrap" id="thApp4">App 4</th>
+                            <th class="p-4 text-center whitespace-nowrap" id="thApp5">App 5</th>
+                            <th class="p-4 text-center whitespace-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ratingsTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+            </div>
+            <div id="emptyMessage" class="hidden flex flex-col items-center justify-center py-12 px-4 text-center bg-slate-50">
+                <svg class="w-12 h-12 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                <h3 class="text-lg font-bold text-slate-700">No ratings yet</h3>
+                <p class="text-sm text-slate-500 mt-1">When users submit ratings, they will appear here.</p>
+            </div>
+            <div id="noResultsMessage" class="hidden flex flex-col items-center justify-center py-12 px-4 text-center bg-slate-50">
+                <h3 class="text-lg font-bold text-slate-700">No matching records found</h3>
+                <p class="text-sm text-slate-500 mt-1">Try adjusting your search query.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="py-6 text-center mt-auto border-t border-slate-200">
+    <p class="text-sm font-medium text-slate-500">
+        Powered by <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Gfinds</span>
+    </p>
+</footer>
+
+<dialog id="deleteModal" class="p-8 rounded-3xl shadow-2xl border-0 w-11/12 max-w-sm bg-white text-center backdrop:bg-slate-900/50">
+    <div class="w-14 h-14 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+    </div>
+    <h3 class="text-xl font-bold text-slate-800 mb-2">Delete Rating?</h3>
+    <p class="text-sm text-slate-500 mb-6">This action cannot be undone. Are you sure you want to remove this record?</p>
+    <div class="flex justify-center gap-3">
+        <button onclick="document.getElementById('deleteModal').close()" class="w-full bg-slate-100 text-slate-700 font-bold px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors">Cancel</button>
+        <button id="confirmBtn" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl hover:bg-rose-700 transition-colors shadow-sm">Delete</button>
+    </div>
+</dialog>
+
+<dialog id="messageModal" class="p-8 rounded-3xl shadow-2xl text-center border-0 w-11/12 max-w-sm bg-white backdrop:bg-slate-900/50">
+    <h3 id="messageText" class="text-xl font-bold mb-6 text-slate-800"></h3>
+    <button onclick="document.getElementById('messageModal').close()" class="w-full bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors">Got it</button>
+</dialog>
+
+<script>
+    let deleteTargetId = null;
+
+    function showMessage(msg) {
+        document.getElementById('messageText').innerText = msg;
+        document.getElementById('messageModal').showModal();
+    }
+
+    async function loadAdminData() {
+        try {
+            const appRes = await fetch('/api/apps');
+            const apps = await appRes.json();
+            const appGrid = document.getElementById('adminAppGrid');
+            appGrid.innerHTML = '';
+            
+            const categories = ["Education", "Finance", "Health", "Government", "Telecomunication"];
+
+            apps.forEach((app, index) => {
+                document.getElementById(`thApp${index + 1}`).innerText = app.title;
+                let optionsHtml = categories.map(cat => `<option value="${cat}" ${app.category === cat ? 'selected' : ''}>${cat}</option>`).join('');
+
+                appGrid.innerHTML += `
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-80 group-hover:opacity-100"></div>
+                        <div class="flex items-center gap-4 mb-5 mt-1">
+                            <img src="${app.image_url}" class="w-14 h-14 rounded-xl object-cover border border-slate-200 shadow-sm">
+                            <div><h3 class="font-bold text-slate-800 text-sm">Slot ${app.id}</h3></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-500 mb-1 uppercase tracking-wider">Title</label>
+                                <input type="text" id="editTitle${app.id}" value="${app.title}" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-500 mb-1 uppercase tracking-wider">Category</label>
+                                <select id="editCat${app.id}" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">${optionsHtml}</select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-500 mb-1 uppercase tracking-wider">Image URL</label>
+                                <input type="text" id="editImg${app.id}" value="${app.image_url}" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-500 mb-1 uppercase tracking-wider">File Link</label>
+                                <input type="text" id="editFile${app.id}" value="${app.file_url}" class="w-full text-sm p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all" placeholder="/static/files/app.zip">
+                            </div>
+                            <button onclick="updateApp(${app.id})" class="w-full bg-slate-100 text-indigo-700 border border-slate-200 font-bold py-2 rounded-lg hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all duration-200 mt-2 text-sm shadow-sm">Save Changes</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const ratRes = await fetch('/api/ratings');
+            const ratings = await ratRes.json();
+            const tbody = document.getElementById('ratingsTableBody');
+            const emptyMsg = document.getElementById('emptyMessage');
+            tbody.innerHTML = '';
+
+            if (ratings.length === 0) {
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+                ratings.forEach(row => {
+                    const badge = "bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded-lg text-xs inline-flex items-center gap-1 border border-indigo-100 shadow-sm";
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition-colors group rating-row">
+                            <td class="p-4 border-b border-slate-100 text-sm font-semibold text-slate-500 user-id">#${row.user_id}</td>
+                            <td class="p-4 border-b border-slate-100 text-sm font-bold text-slate-800 user-name">${row.user_name}</td>
+                            <td class="p-4 border-b border-slate-100 text-center"><span class="${badge}">⭐ ${row.app1}</span></td>
+                            <td class="p-4 border-b border-slate-100 text-center"><span class="${badge}">⭐ ${row.app2}</span></td>
+                            <td class="p-4 border-b border-slate-100 text-center"><span class="${badge}">⭐ ${row.app3}</span></td>
+                            <td class="p-4 border-b border-slate-100 text-center"><span class="${badge}">⭐ ${row.app4}</span></td>
+                            <td class="p-4 border-b border-slate-100 text-center"><span class="${badge}">⭐ ${row.app5}</span></td>
+                            <td class="p-4 border-b border-slate-100 text-center">
+                                <button onclick="promptDelete(${row.id})" class="text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-lg text-xs font-bold border border-rose-100 transition-colors">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            filterTable();
+        } catch (error) { console.error(error); }
+    }
+
+    async function updateApp(id) {
+        const payload = {
+            title: document.getElementById(`editTitle${id}`).value,
+            category: document.getElementById(`editCat${id}`).value,
+            image_url: document.getElementById(`editImg${id}`).value,
+            file_url: document.getElementById(`editFile${id}`).value
+        };
+
+        try {
+            await fetch(`/api/apps/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            showMessage("Application slot updated successfully!");
+            loadAdminData(); 
+        } catch (error) { console.error(error); showMessage("Error updating application."); }
+    }
+
+    function promptDelete(id) { deleteTargetId = id; document.getElementById('deleteModal').showModal(); }
+    document.getElementById('confirmBtn').addEventListener('click', async function() {
+        await fetch(`/api/ratings/${deleteTargetId}`, { method: 'DELETE' });
+        document.getElementById('deleteModal').close();
+        loadAdminData(); 
+    });
+
+    function filterTable() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('.rating-row');
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const idText = row.querySelector('.user-id').textContent.toLowerCase();
+            const nameText = row.querySelector('.user-name').textContent.toLowerCase();
+
+            if (idText.includes(query) || nameText.includes(query)) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const noResultsMsg = document.getElementById('noResultsMessage');
+        const emptyMsg = document.getElementById('emptyMessage');
+        
+        if (visibleCount === 0 && rows.length > 0) {
+            noResultsMsg.classList.remove('hidden');
+        } else {
+            noResultsMsg.classList.add('hidden');
+        }
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterTable);
+
+    window.onload = loadAdminData;
+</script>
+</body>
+</html>
